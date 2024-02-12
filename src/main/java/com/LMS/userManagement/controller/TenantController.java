@@ -1,5 +1,6 @@
 package com.LMS.userManagement.controller;
 
+import com.LMS.userManagement.dto.LoginDto;
 import com.LMS.userManagement.dto.TenantDto;
 import com.LMS.userManagement.model.TenantDetails;
 import com.LMS.userManagement.service.TenantService;
@@ -28,9 +29,8 @@ public class TenantController {
 
     @PostMapping("/tenantLogin")
     //@PreAuthorize("hasAuthority('manager')")
-    public ResponseEntity<?> tenantLogin(@RequestHeader String email,
-                                         @RequestHeader String password) {
-        return tenantService.tenantLogin(email, password);
+    public ResponseEntity<?> tenantLogin(@RequestBody LoginDto login) {
+        return tenantService.tenantLogin(login);
     }
 
 

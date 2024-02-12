@@ -1,6 +1,7 @@
 package com.LMS.userManagement.controller;
 
 import com.LMS.userManagement.dto.AdminDto;
+import com.LMS.userManagement.dto.LoginDto;
 import com.LMS.userManagement.model.Admin;
 import com.LMS.userManagement.service.AdminService;
 import lombok.RequiredArgsConstructor;
@@ -27,9 +28,8 @@ public class AdminController {
     }
 
     @PostMapping("/adminLogin")
-    public ResponseEntity<?> adminLogin(@RequestHeader String email,
-                                        @RequestHeader String password){
-        return    adminService.adminLogin(email,password);
+    public ResponseEntity<?> adminLogin(@RequestBody LoginDto login){
+        return    adminService.adminLogin(login);
     }
 
     @DeleteMapping("/deleteTenantById")

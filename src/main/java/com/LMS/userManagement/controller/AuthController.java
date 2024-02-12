@@ -1,6 +1,7 @@
 package com.LMS.userManagement.controller;
 
 import com.LMS.userManagement.dto.AuthenticationResponse;
+import com.LMS.userManagement.dto.LoginDto;
 import com.LMS.userManagement.dto.RegisterRequest;
 import com.LMS.userManagement.service.AuthService;
 import com.LMS.userManagement.util.Views;
@@ -42,11 +43,9 @@ try {
 
     @PostMapping("/login")
    // @PreAuthorize("hasAuthority('user')")
-    public ResponseEntity<?> authentication (
-            @RequestHeader String email,
-            @RequestHeader String password,
-            @RequestHeader String tenantId) {
-        return authService.authentication(email, password,tenantId);
+    public ResponseEntity<?> authentication (@RequestBody LoginDto login,
+                                             @RequestHeader String tenantId) {
+        return authService.authentication(login,tenantId);
 
     }
 

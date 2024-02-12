@@ -44,7 +44,12 @@ public class SecurityConfiguration {
        http.cors(AbstractHttpConfigurer::disable)
                .csrf(csrf ->csrf.disable())
                         .authorizeHttpRequests(auth->
-                            auth   .requestMatchers("/lms/api/auth/**").permitAll()
+                            auth
+                                    .requestMatchers("/lms/api/auth/**").permitAll()
+                               .requestMatchers("/v3/api-docs/**").permitAll()
+                               .requestMatchers("/v3/api-docs").permitAll()
+                               .requestMatchers("/swagger-ui/**").permitAll()
+                               .requestMatchers("/swagger-ui.html").permitAll()
                                     .requestMatchers("/lms/api/auth/refreshToken").permitAll()
                                     .requestMatchers("/lms/api/tenant/**").permitAll()
                                     .requestMatchers("/lms/api/admin/**").permitAll()
