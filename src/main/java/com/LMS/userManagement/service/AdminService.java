@@ -1,7 +1,7 @@
 package com.LMS.userManagement.service;
 
 import com.LMS.userManagement.dto.AdminDto;
-import com.LMS.userManagement.dto.LoginDto;
+import com.LMS.userManagement.dto.LoginDTO;
 import com.LMS.userManagement.model.Admin;
 import com.LMS.userManagement.model.TenantDetails;
 import com.LMS.userManagement.repository.AdminRepository;
@@ -52,7 +52,7 @@ public class AdminService {
         return ResponseEntity.status(HttpStatus.OK).body(savedAdmin);
     }
 
-    public ResponseEntity<?> adminLogin(LoginDto login) {
+    public ResponseEntity<?> adminLogin(LoginDTO login) {
         String email=login.email();
         String password= login.password();
         Optional<Admin> admin = adminRepository.findAllByEmail(email);

@@ -10,6 +10,7 @@ import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -32,6 +33,20 @@ public class SecurityConfiguration {
     private final JwtAuthenticationFilter jwtAuthFilter;
     private final   AuthenticationProvider authenticationProvider;
 
+
+
+    private static final String[] SWAGGER_AUTH_WHITELIST={
+            "/api/v1/auth/**",
+            "/v2/api-docs",
+            "/v3/api-docs",
+            "/v3/api-docs/**",
+            "/v3/api-docs.yaml",
+            "/swagger-ui/**",
+            "/swagger-ui.html",
+            "/swagger-resources",
+            "/swagger-resources/**"
+    };
+
   //  private final LogoutHandler logoutHandler;
 
  /*@Bean
@@ -41,37 +56,41 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
-       http.cors(AbstractHttpConfigurer::disable)
-               .csrf(csrf ->csrf.disable())
-                        .authorizeHttpRequests(auth->
-                            auth
-                                    .requestMatchers("/lms/api/auth/**").permitAll()
-                               .requestMatchers("/v3/api-docs/**").permitAll()
-                               .requestMatchers("/v3/api-docs").permitAll()
-                               .requestMatchers("/swagger-ui/**").permitAll()
-                               .requestMatchers("/swagger-ui.html").permitAll()
-                                    .requestMatchers("/lms/api/auth/refreshToken").permitAll()
-                                    .requestMatchers("/lms/api/tenant/**").permitAll()
-                                    .requestMatchers("/lms/api/admin/**").permitAll()
-                                   .requestMatchers("/lms/api/user/getCourseCompletion").permitAll()
-                                    .requestMatchers(HttpMethod.OPTIONS).permitAll()
-                                   /*.requestMatchers("/lms/api/auth/saveAndEditProfile").permitAll()
-                                    .requestMatchers("/lms/api/user/saveSection").permitAll()
-                                    .requestMatchers("/lms/api/user/saveCourse").permitAll()
-                                    .requestMatchers("/lms/api/user/deleteCourseById").permitAll()
+        http.cors(AbstractHttpConfigurer::disable)
+                .csrf(csrf -> csrf.disable())
+                .authorizeHttpRequests(auth ->
+                        auth
+                                .requestMatchers("/lms/api/auth/**").permitAll()
+                                .requestMatchers(SWAGGER_AUTH_WHITELIST).permitAll()
+                                .requestMatchers("/v3/api-docs/**", "/swagger-ui/**").permitAll()
+                                .requestMatchers("/lms/api/auth/refreshToken").permitAll()
+                                .requestMatchers("/lms/api/tenant/**").permitAll()
+                                .requestMatchers("/lms/api/admin/**").permitAll()
+                                .requestMatchers("/lms/api/user/getCourseCompletion").permitAll()
+                                .requestMatchers(HttpMethod.OPTIONS).permitAll()
+                                /*.requestMatchers("/lms/api/auth/saveAndEditProfile").permitAll()
+                                 .requestMatchers("/lms/api/user/saveSection").permitAll()
+                                 .requestMatchers("/lms/api/user/saveCourse").permitAll()
+                                 .requestMatchers("/lms/api/user/deleteCourseById").permitAll()
 */                                   /* .requestMatchers("/lms/api/user/").hasRole("user")
                                     .requestMatchers("/lms/api/admin").hasRole("admin")*/
-                                    .anyRequest().authenticated()
-                         )
-                .sessionManagement(sess->sess
+                                .anyRequest().authenticated()
+                )
+                .sessionManagement(sess -> sess
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider)
-                .addFilterBefore(jwtAuthFilter,UsernamePasswordAuthenticationFilter.class)
-             // .logout(logout -> logout.logoutUrl("lms/api/auth/logout")
-              //         .addLogoutHandler(logoutHandler)
-               //       .logoutSuccessHandler(((request, response, authentication) ->
-                 //            SecurityContextHolder.clearContext())))
-                       ;
+                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
+        // .logout(logout -> logout.logoutUrl("lms/api/auth/logout")
+        //         .addLogoutHandler(logoutHandler)
+        //       .logoutSuccessHandler(((request, response, authentication) ->
+        //            SecurityContextHolder.clearContext())))
+        ;
         return http.build();
+
     }
-}
+
+   /* public WebSecurityCustomizer webSecurityCustomizer(){
+        return web -> {web.ignoring().requestMatchers("/v3/api-docs/**");
+        };
+    }*/
+    }

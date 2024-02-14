@@ -1,13 +1,11 @@
 package com.LMS.userManagement.controller;
 
-import com.LMS.userManagement.dto.LoginDto;
+import com.LMS.userManagement.dto.LoginDTO;
 import com.LMS.userManagement.dto.TenantDto;
-import com.LMS.userManagement.model.TenantDetails;
 import com.LMS.userManagement.service.TenantService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -29,7 +27,7 @@ public class TenantController {
 
     @PostMapping("/tenantLogin")
     //@PreAuthorize("hasAuthority('manager')")
-    public ResponseEntity<?> tenantLogin(@RequestBody LoginDto login) {
+    public ResponseEntity<?> tenantLogin(@RequestBody LoginDTO login) {
         return tenantService.tenantLogin(login);
     }
 

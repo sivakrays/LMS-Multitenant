@@ -1,8 +1,7 @@
 package com.LMS.userManagement.controller;
 
 import com.LMS.userManagement.dto.AdminDto;
-import com.LMS.userManagement.dto.LoginDto;
-import com.LMS.userManagement.model.Admin;
+import com.LMS.userManagement.dto.LoginDTO;
 import com.LMS.userManagement.service.AdminService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -28,7 +27,7 @@ public class AdminController {
     }
 
     @PostMapping("/adminLogin")
-    public ResponseEntity<?> adminLogin(@RequestBody LoginDto login){
+    public ResponseEntity<?> adminLogin(@RequestBody LoginDTO login){
         return    adminService.adminLogin(login);
     }
 

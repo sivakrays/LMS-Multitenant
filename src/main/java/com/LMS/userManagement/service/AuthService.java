@@ -1,7 +1,7 @@
 package com.LMS.userManagement.service;
 
 import com.LMS.userManagement.dto.AuthenticationResponse;
-import com.LMS.userManagement.dto.LoginDto;
+import com.LMS.userManagement.dto.LoginDTO;
 import com.LMS.userManagement.dto.RegisterRequest;
 import com.LMS.userManagement.dto.UserDto;
 import com.LMS.userManagement.model.*;
@@ -64,7 +64,7 @@ public class AuthService {
 
 
 
-    public ResponseEntity<?> authentication(LoginDto login,String tenantId) {
+    public ResponseEntity<?> authentication(LoginDTO login, String tenantId) {
         String email= login.email();
         String password=login.password();
 try {

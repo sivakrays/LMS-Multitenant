@@ -1,18 +1,14 @@
 package com.LMS.userManagement.controller;
 
-import com.LMS.userManagement.dto.AuthenticationResponse;
-import com.LMS.userManagement.dto.LoginDto;
+import com.LMS.userManagement.dto.LoginDTO;
 import com.LMS.userManagement.dto.RegisterRequest;
 import com.LMS.userManagement.service.AuthService;
-import com.LMS.userManagement.util.Views;
-import com.fasterxml.jackson.annotation.JsonView;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
@@ -43,7 +39,7 @@ try {
 
     @PostMapping("/login")
    // @PreAuthorize("hasAuthority('user')")
-    public ResponseEntity<?> authentication (@RequestBody LoginDto login,
+    public ResponseEntity<?> authentication (@RequestBody LoginDTO login,
                                              @RequestHeader String tenantId) {
         return authService.authentication(login,tenantId);
 

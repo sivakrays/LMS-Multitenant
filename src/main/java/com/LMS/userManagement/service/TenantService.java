@@ -1,7 +1,6 @@
 package com.LMS.userManagement.service;
 
-import com.LMS.userManagement.dto.LoginDto;
-import com.LMS.userManagement.dto.RegisterRequest;
+import com.LMS.userManagement.dto.LoginDTO;
 import com.LMS.userManagement.dto.TenantDto;
 import com.LMS.userManagement.model.TenantDetails;
 import com.LMS.userManagement.repository.TenantRepository;
@@ -14,9 +13,6 @@ import org.springframework.stereotype.Service;
 
 import javax.sql.DataSource;
 import java.sql.Timestamp;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -68,7 +64,7 @@ public class TenantService {
         return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Tenant already exists");
     }
 
-    public ResponseEntity<?> tenantLogin(LoginDto login) {
+    public ResponseEntity<?> tenantLogin(LoginDTO login) {
         String email=login.email();
         String password=login.password();
         Optional<TenantDetails> tenant=tenantRepository.findByEmail(email);
