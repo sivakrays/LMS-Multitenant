@@ -1,7 +1,8 @@
 package com.LMS.userManagement.controller;
 
-import com.LMS.userManagement.dto.AdminDto;
+import com.LMS.userManagement.dto.AdminDTO;
 import com.LMS.userManagement.dto.LoginDTO;
+import com.LMS.userManagement.model.Admin;
 import com.LMS.userManagement.service.AdminService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -22,7 +23,7 @@ public class AdminController {
 
     @PostMapping("/adminRegistration")
     //@PreAuthorize("hasAuthority('admin')")
-    public ResponseEntity<?> adminRegistration(@RequestBody AdminDto adminDto){
+    public ResponseEntity<?> adminRegistration(@RequestBody AdminDTO adminDto){
      return    adminService.adminRegistration(adminDto);
     }
 

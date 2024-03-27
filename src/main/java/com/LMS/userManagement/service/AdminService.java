@@ -1,6 +1,6 @@
 package com.LMS.userManagement.service;
 
-import com.LMS.userManagement.dto.AdminDto;
+import com.LMS.userManagement.dto.AdminDTO;
 import com.LMS.userManagement.dto.LoginDTO;
 import com.LMS.userManagement.model.Admin;
 import com.LMS.userManagement.model.TenantDetails;
@@ -36,17 +36,17 @@ public class AdminService {
     private EntityManager entityManager;
 
 
-    public ResponseEntity<?> adminRegistration(AdminDto adminDto) {
-        var adminDetails = adminRepository.findAllByEmail(adminDto.getEmail());
+    public ResponseEntity<?> adminRegistration(AdminDTO adminDto) {
+        var adminDetails = adminRepository.findAllByEmail(adminDto.email());
         if (adminDetails.isPresent()) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body("User already exists");
 
         }
         var admin = Admin.builder()
                 .role("owner")
-                .password(adminDto.getPassword())
+                .password(adminDto.password())
                 .createdDate(new Timestamp(System.currentTimeMillis()))
-                .email(adminDto.getEmail())
+                .email(adminDto.email())
                 .build();
         var savedAdmin = adminRepository.save(admin);
         return ResponseEntity.status(HttpStatus.OK).body(savedAdmin);
@@ -58,11 +58,10 @@ public class AdminService {
         Optional<Admin> admin = adminRepository.findAllByEmail(email);
         if (admin.isPresent() && admin.get().getPassword().equals(password)) {
             var ad = admin.get();
-            var adminDto = AdminDto.builder()
-                    .password(null)
-                    .email(ad.getEmail())
-                    .role(ad.getRole())
-                    .build();
+            var adminDto = new AdminDTO(
+                    ad.getEmail(),null,
+                    ad.getRole()
+            );
             return ResponseEntity.status(HttpStatus.OK).body(adminDto);
         }
         return ResponseEntity.status(403).body("User not found");
